@@ -1,0 +1,100 @@
+﻿@model IEnumerable<StudentWcfConsume.ServiceReference1.Student>
+@using Microsoft.AspNet.Identity
+
+@{
+    ViewBag.Title = "GetStudents";
+    String StudentCin = null;
+}
+
+<h2>GetStudents</h2>
+
+<p>
+    @Html.ActionLink("Create New", "CreateStudent", null, new { @class = "btn btn-success" })
+    <!-- <form method="Get" action="GetStudent" style="float:right;">
+
+         <input id="cin" name="cin" type="Text" class="form-control input-sm" style="float:right;" placeholder="cin" />
+         <input value="Search" type="Submit" class="btn btn-primary" style="float:right;" />
+
+     </form> -->
+    <div class="col-md-6">
+        <div class="form" style="float: right;">
+            <form method="POST" action="/Student/GetStudent">
+                <button type="submit" name="Search" class="btn btn-primary btn-sm">Search By CIN</button>
+                <input type="text" id="cin" name="cin" placeholder="cin">
+            </form>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form" style="float: right;">
+            <form method="POST" action="/Student/GetStudentsByFil">
+                <button type="submit" name="Search" class="btn btn-primary btn-sm">Search By Filiere</button>
+                <select id="fil" name="fil">
+                    <option value="">--Please choose an option--</option>
+                    @foreach (var item in ViewBag.Fils)
+                    {
+                    <option value="@item">@item</option>
+                    }
+                </select>
+</form>
+        </div>
+    </div>
+</p>
+<br />
+<br />
+
+
+
+<table class="table table-hover">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.cin)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.fil)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.first_name)
+        </th>
+        
+        <th>
+            @Html.DisplayNameFor(model => model.last_name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.phone)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in ViewBag.List) {
+    <tr class="border-1 border-top-0 border-start-0 border-end-0 border-light" >
+        <td>
+            @item.cin
+        </td>
+        <td>
+            @item.email
+        </td>
+        <td>
+            @item.fil
+        </td>
+        <td>
+            @item.first_name
+        </td>
+        
+        <td>
+            @item.last_name
+        </td>
+        <td>
+            @item.phone
+        </td>
+        <td class="d-flex flex-row flex-nowrap gap-2" >
+                @Html.ActionLink("Update", "UpdateStudent", "Student", new { @item.cin }, new { @class = "btn btn-primary" }) 
+                @Html.ActionLink("Details", "GetStudent","Student", new { @item.cin }, new { @class = "btn btn-secondary" }) 
+                @Html.ActionLink("Delete", "DeleteStudent", "Student", new { @item.cin }, new { @class = "btn btn-danger", onclick = "return confirm('Are you sure you want to delete?');" })
+        </td>
+    </tr>
+}
+
+</table>
